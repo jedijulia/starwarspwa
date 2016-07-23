@@ -1,0 +1,22 @@
+{% extends 'starwarspwa/base.html' %}
+
+
+{% load staticfiles %}
+
+{% block title %}You are offline!{% endblock %}
+
+
+{% block content %}
+    <div class="offline">
+        You are currently offline.
+    </div>
+
+    <footer>
+        <button class="subscribe button button--mini" onclick="history.back()">Back</button>
+    </footer>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{% static 'starwarspwa/javascripts/main.js' %}"></script>
+{% endblock %}

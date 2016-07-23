@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+h1 {
+    margin-bottom: 50px;
+    font-size: 72px;
+    font-weight: normal;
+    text-align: center;
+    color: #f1b23f;
+}
+
+
+.jedi-name {
+    font-weight: bold;
+    color: #faa305;
+}
+
+
+form {
+    font-size: 0;
+    text-align: center;
+}
+
+
+input {
+    padding: 20px 40px;
+    border: 3px solid #f1b23f;
+    font-family: "Quicksand", sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    border-radius: 10px;
+    outline: none;
+}
+
+
+input {
+    margin-right: 10px;
+    color: #f1b23f;
+    background-color: transparent;
+}

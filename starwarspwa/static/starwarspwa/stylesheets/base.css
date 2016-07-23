@@ -1,0 +1,96 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    min-height: 100vh;
+    font-family: "Quicksand", sans-serif;
+    font-size: 16px;
+    color: #222;
+    background-color: #000;
+}
+
+
+footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+.button {
+    padding: 0.4em 0.8em;
+    border: 3px solid #f1b23f;
+    font-family: "Quicksand", sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+    background-color: #f1b23f;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.button:hover,
+.button:focus {
+    background-color: #faa305;
+    border-color: #faa305;
+}
+
+
+.button--mini {
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+
+.button[disabled] {
+    color: transparent;
+    position: relative;
+}
+
+.button[disabled]::before {
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    position: absolute;
+    top: calc(50% - 0.4em);
+    left: calc(50% - 0.4em);
+    border: 5px solid #000;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate 500ms linear infinite;
+    will-change: transform;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+
+.subscribe {
+    margin-right: 10px;
+}
+
+
+.offline {
+    padding-top: 480px;
+    font-size: 32px;
+    text-align: center;
+    color: #f1b23f;
+    background: url("../images/wifi-offline.png") center 320px no-repeat;
+    background-size: auto 30%;
+}

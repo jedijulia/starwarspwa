@@ -1,0 +1,4 @@
+*.pyc
+db.sqlite3
+staticroot/
+settings_overrides.py
