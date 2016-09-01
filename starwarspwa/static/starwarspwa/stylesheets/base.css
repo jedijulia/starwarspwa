@@ -140,7 +140,7 @@ footer {
 
 
 
-/** Home page overrides. **/
+/** Home page styles. **/
 
 .page--home {
     display: flex;
@@ -158,6 +158,51 @@ footer {
 
 .subscribe-button {
     margin-right: 10px;
+}
+
+
+
+/** Transmissions page styles. **/
+
+.page--transmissions {
+    padding: 50px 0;
+}
+
+
+.transmissions {
+    width: 75vw;
+    margin: 0 auto;
+    list-style: none;
+}
+
+
+.transmission {
+    display: flex;
+}
+
+.transmission:not(:last-child) {
+    margin-bottom: 5vh;
+}
+
+
+.transmission__sender {
+    margin-top: 18px;
+    margin-right: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #faa305;
+    white-space: nowrap;
+}
+
+.transmission__sender::after {
+    content: ":";
+    color: #f1b23f;
+}
+
+
+.transmission__message {
+    font-size: 64px;
+    color: #f1b23f;
 }
 
 

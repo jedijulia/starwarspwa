@@ -6,20 +6,20 @@
 
         <link rel="manifest" href="/manifest.json">
         <link rel="stylesheet" href="/static/starwarspwa/stylesheets/base.css">
-        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/transmissions.css">
     </head>
 
-    <body>
+    <body class="page--transmissions">
         <ul class="transmissions">
             {% for transmission in transmissions %}
                 <li class="transmission">
-                    <span class="jedi">{{ transmission.jedi }}</span>
-                    <p class="message">{{ transmission.message }}</p>
+                    <span class="transmission__sender">{{ transmission.jedi }}</span>
+                    <p class="transmission__message">{{ transmission.message }}</p>
                 </li>
             {% endfor %}
         </ul>
 
         <footer>
+            <button class="button button--mini subscribe-button" data-action="subscribe">Subscribe</button>
             <a href="/" class="button button--mini">Transmit Message</a>
         </footer>
 
