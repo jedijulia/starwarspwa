@@ -7,4 +7,6 @@ class Transmission(models.Model):
 
 
 class Subscription(models.Model):
-    subscription_id = models.TextField()
+    endpoint = models.CharField(max_length=255, null=True)
+    p256dh = models.CharField(max_length=255, null=True)
+    auth = models.CharField(max_length=255, null=True)

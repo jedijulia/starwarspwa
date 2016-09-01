@@ -8,7 +8,7 @@ class TransmissionAdmin(admin.ModelAdmin):
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('subscription_id',)
+    list_display = ('endpoint', 'p256dh', 'auth',)
 
 
 admin.site.register(Transmission, TransmissionAdmin)

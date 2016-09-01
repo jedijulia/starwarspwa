@@ -62,11 +62,15 @@ class TransmissionsView(TemplateView):
 class SubscriptionView(View):
 
     def get(self, request, *args, **kwargs):
-        subscription_id = request.GET.get('id')
+        endpoint = request.GET.get('endpoint')
+        p256dh = request.GET.get('keys[p256dh]')
+        auth = request.GET.get('keys[auth]')
         if kwargs['action'] == 'subscribe':
-            Subscription.objects.create(subscription_id=subscription_id)
+            Subscription.objects.create(
+                endpoint=endpoint, p256dh=p256dh, auth=auth)
         elif kwargs['action'] == 'unsubscribe':
-            Subscription.objects.get(subscription_id=subscription_id).delete()
+            Subscription.objects.get(
+                endpoint=endpoint, p256dh=p256dh, auth=auth).delete()
         return JsonResponse({'success': True})
 
 
