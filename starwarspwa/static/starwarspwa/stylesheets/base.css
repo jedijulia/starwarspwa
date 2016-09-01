@@ -23,10 +23,16 @@ footer {
 }
 
 
+
+/** Utility classes. **/
+
 .hidden {
     display: none !important;
 }
 
+
+
+/** Button styles. **/
 
 .button {
     padding: 0.4em 0.8em;
@@ -49,13 +55,6 @@ footer {
     border-color: #faa305;
 }
 
-
-.button--mini {
-    font-size: 20px;
-    border-radius: 5px;
-}
-
-
 .button[disabled] {
     color: transparent;
     position: relative;
@@ -75,10 +74,38 @@ footer {
     will-change: transform;
 }
 
+
+.button--mini {
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+
+
+/** Keyframe animations. **/
+
 @keyframes rotate {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
 }
+
+
+
+/** Font faces. **/
+
+@font-face {
+    font-family: "Quicksand";
+    src: url("../fonts/quicksand/regular.woff2") format("woff2");
+    font-weight: normal;
+}
+
+
+@font-face {
+    font-family: "Quicksand";
+    src: url("../fonts/quicksand/bold.woff2") format("woff2");
+    font-weight: bold;
+}
+
 
 
 .subscribe {
