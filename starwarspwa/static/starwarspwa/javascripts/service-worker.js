@@ -17,38 +17,26 @@ self.addEventListener('install', function(e) {
             return cache.addAll(urlsToCache);
         }).then(function() {
             console.info('Caching for "' + cacheName + '" completed."');
+            self.skipWaiting();
         }).catch(function(error) {
             console.error('Failed to cache resources.', error);
         })
     );
-})
+});
 
-// var CACHE_NAME = 'cache-one';
-//
-// var urls = [
-//     '/',
-//     '/transmissions/',
-//     '/offline/',
-//     '/static/starwarspwa/images/wifi-offline.png',
-//     '/static/starwarspwa/stylesheets/base.css',
-//     '/static/starwarspwa/stylesheets/home.css',
-//     '/static/starwarspwa/stylesheets/transmissions.css',
-//     '/static/starwarspwa/javascripts/utils.js',
-//     '/static/starwarspwa/javascripts/main.js'
-// ];
-//
-//
-// self.addEventListener('install', function(e) {
-//     e.waitUntil(
-//         caches.open(CACHE_NAME)
-//             .then(function(cache) {
-//                 return cache.addAll(urls);
-//             })
-//             .then(function() {
-//                 console.info('Caching for "' + CACHE_NAME + '" completed.');
-//             })
-//     );
-// });
+
+self.addEventListener('activate', function(e) {
+    e.waitUntil(
+        caches.keys().then(function(cacheKeys) {
+            return Promise.all(cacheKeys.filter(function(cacheKey) {
+                return cacheKey !== cacheName;
+            }).map(function(cacheKey) {
+                return caches.delete(cacheKey);
+            }));
+        })
+    );
+});
+
 //
 //
 // self.addEventListener('activate', function(e) {
