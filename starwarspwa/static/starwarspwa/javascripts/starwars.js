@@ -119,7 +119,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistration().then(function(registration) {
         if (registration !== undefined) {
             registration.pushManager.getSubscription().then(function(subscription) {
-                if (subscription !== undefined) {
+                if (subscription !== null) {
                     changeSubscribeToUnsubscribe();
                 }
             });
