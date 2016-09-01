@@ -1,35 +1,34 @@
-{% extends 'starwarspwa/base.html' %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Jedi Beacon Transceiver</title>
 
+        <link rel="manifest" href="/manifest.json">
+        <link href='https://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/base.css">
+        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/home.css">
+    </head>
 
-{% load staticfiles %}
+    <body>
+        <form action="#" class="jedi-form">
+            <h1>What is your Jedi name?</h1>
+            <input type="text" name="name" class="jedi-input" spellcheck="false" maxlength="25" autofocus>
+            <button class="button">Save</button>
+        </form>
 
-{% block title %}Jedi Beacon Transceiver{% endblock %}
+        <form action="/transmit" class="transmit-form hidden">
+            <h1>Hello, Jedi <span class="jedi-name"></span></h1>
+            <input type="text" name="message" class="transmit-message" spellcheck="false" autofocus>
+            <button class="button">Transmit</button>
+        </form>
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{% static 'starwarspwa/stylesheets/home.css' %}">
-{% endblock %}
+        <footer>
+            <button class="subscribe button button--mini" data-action="subscribe">Subscribe</button>
+            <a href="/transmissions" class="button button--mini">View Transmissions</a>
+        </footer>
 
-
-{% block content %}
-    <form action="#" class="jedi-form">
-        <h1>What is your Jedi name?</h1>
-        <input type="text" name="name" class="jedi-input" spellcheck="false" maxlength="25" autofocus>
-        <button class="button">Save</button>
-    </form>
-
-    <form action="/transmit" class="transmit-form hidden">
-        <h1>Hello, Jedi <span class="jedi-name"></span></h1>
-        <input type="text" name="message" class="transmit-message" spellcheck="false" autofocus>
-        <button class="button">Transmit</button>
-    </form>
-
-    <footer>
-        <button class="subscribe button button--mini" data-action="subscribe">Subscribe</button>
-        <a href="{% url 'transmissions-page' %}" class="button button--mini">View Transmissions</a>
-    </footer>
-{% endblock %}
-
-
-{% block javascripts %}
-    <script src="{% static 'starwarspwa/javascripts/main.js' %}"></script>
-{% endblock %}
+        <script src="/static/starwarspwa/javascripts/utils.js"></script>
+        <script src="/static/starwarspwa/javascripts/main.js"></script>
+    </body>
+</html>

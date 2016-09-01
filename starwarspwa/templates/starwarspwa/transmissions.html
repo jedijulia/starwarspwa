@@ -1,26 +1,29 @@
-{% extends 'starwarspwa/base.html' %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Jedi Beacon Transmissions</title>
 
+        <link rel="manifest" href="/manifest.json">
+        <link href='https://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/base.css">
+        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/transmissions.css">
+    </head>
 
-{% load staticfiles %}
+    <body>
+        <ul class="transmissions">
+            {% for transmission in transmissions %}
+                <li class="transmission">
+                    <span class="jedi">{{ transmission.jedi }}</span>
+                    <p class="message">{{ transmission.message }}</p>
+                </li>
+            {% endfor %}
+        </ul>
 
-{% block title %}Jedi Beacon Transmissions{% endblock %}
+        <footer>
+            <a href="/" class="button button--mini">Transmit Message</a>
+        </footer>
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{% static 'starwarspwa/stylesheets/transmissions.css' %}">
-{% endblock %}
-
-
-{% block content %}
-    <ul class="transmissions">
-        {% for transmission in transmissions %}
-            <li class="transmission">
-                <span class="jedi">{{ transmission.jedi }}</span>
-                <p class="message">{{ transmission.message }}</p>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <footer>
-        <a href="{% url 'home-page' %}" class="button button--mini">Transmit Message</a>
-    </footer>
-{% endblock %}
+        <script src="/static/starwarspwa/javascripts/utils.js"></script>
+    </body>
+</html>

@@ -1,22 +1,22 @@
-{% extends 'starwarspwa/base.html' %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>You are offline!</title>
 
+        <link rel="manifest" href="/manifest.json">
+        <link href='https://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/base.css">
+    </head>
 
-{% load staticfiles %}
+    <body>
+        <p class="offline">You are currently offline.</p>
 
-{% block title %}You are offline!{% endblock %}
+        <footer>
+            <button class="subscribe button button--mini" onclick="history.back()">Back</button>
+        </footer>
 
-
-{% block content %}
-    <div class="offline">
-        You are currently offline.
-    </div>
-
-    <footer>
-        <button class="subscribe button button--mini" onclick="history.back()">Back</button>
-    </footer>
-{% endblock %}
-
-
-{% block javascripts %}
-    <script src="{% static 'starwarspwa/javascripts/main.js' %}"></script>
-{% endblock %}
+        <script src="/static/starwarspwa/javascripts/utils.js"></script>
+        <script src="/static/starwarspwa/javascripts/main.js"></script>
+    </body>
+</html>
