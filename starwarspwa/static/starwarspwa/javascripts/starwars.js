@@ -100,3 +100,66 @@ function enableTransmissionForm() {
 function resetTransmissionForm() {
     $('.transmit-form input').val('').focus();
 }
+
+
+
+
+
+/**
+ *  Update subscribe button state.
+ *
+ *  Check push notification subscription status. If user is not yet subscribed
+ *  to push notifications, we don't do anything with the subscribe button.
+ *
+ *  If the user is already subscribed to push notifications, we change the
+ *  subscribe button to an unsubscribe button.
+ **/
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration().then(function(registration) {
+        if (registration !== undefined) {
+            registration.pushManager.getSubscription().then(function(subscription) {
+                if (subscription !== undefined) {
+                    changeSubscribeToUnsubscribe();
+                }
+            });
+        }
+    }).catch(function(error) {
+        console.error('Failed to get service worker registration.', error);
+    });
+}
+
+
+function changeSubscribeToUnsubscribe() {
+    $('.subscription-button').text('Unsubscribe');
+    $('.subscription-button').data('action', 'unsubscribe');
+}
+
+
+function changeUnsubscribeToSubscribe() {
+    $('.subscription-button').text('Subscribe');
+    $('.subscription-button').data('action', 'subscribe');
+}
+
+
+function storeSubscriptionInServerStorage(subscription) {
+    return updateSubscriptionInServerStorage('subscribe', subscription);
+}
+
+
+function deleteSubscriptionFromServerStorage(subscription) {
+    return updateSubscriptionInServerStorage('unsubscribe', subscription);
+}
+
+
+function updateSubscriptionInServerStorage(action, subscription) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: '/subscription/' + action,
+            type: 'GET',
+            data: JSON.parse(JSON.stringify(subscription)),
+            success: resolve,
+            error: reject
+        });
+    });
+}
