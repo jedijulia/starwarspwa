@@ -82,6 +82,38 @@ footer {
 
 
 
+/** Form styles. **/
+
+.form {
+    font-size: 0;
+    text-align: center;
+}
+
+
+.form__title {
+    margin-bottom: 50px;
+    font-size: 72px;
+    font-weight: normal;
+    text-align: center;
+    color: #f1b23f;
+}
+
+
+.form__input {
+    padding: 20px 40px;
+    border: 3px solid #f1b23f;
+    margin-right: 10px;
+    font-family: "Quicksand", sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    color: #f1b23f;
+    background-color: transparent;
+    border-radius: 10px;
+    outline: none;
+}
+
+
+
 /** Keyframe animations. **/
 
 @keyframes rotate {
@@ -108,10 +140,29 @@ footer {
 
 
 
-.subscribe {
+/** Home page overrides. **/
+
+.page--home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.jedi-name {
+    font-weight: bold;
+    color: #faa305;
+}
+
+
+.subscribe-button {
     margin-right: 10px;
 }
 
+
+
+/** Offline page overrides. **/
 
 .offline {
     padding-top: 480px;

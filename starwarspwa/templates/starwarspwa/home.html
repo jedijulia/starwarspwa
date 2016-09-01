@@ -6,24 +6,23 @@
 
         <link rel="manifest" href="/manifest.json">
         <link rel="stylesheet" href="/static/starwarspwa/stylesheets/base.css">
-        <link rel="stylesheet" href="/static/starwarspwa/stylesheets/home.css">
     </head>
 
-    <body>
-        <form action="#" class="jedi-form">
-            <h1>What is your Jedi name?</h1>
-            <input type="text" name="name" class="jedi-input" spellcheck="false" maxlength="25" autofocus>
+    <body class="page--home">
+        <form action="#" class="form jedi-form">
+            <h1 class="form__title">What is your Jedi name?</h1>
+            <input type="text" name="name" class="form__input" spellcheck="false" maxlength="25" autofocus>
             <button class="button">Save</button>
         </form>
 
-        <form action="/transmit" class="transmit-form hidden">
-            <h1>Hello, Jedi <span class="jedi-name"></span></h1>
-            <input type="text" name="message" class="transmit-message" spellcheck="false" autofocus>
+        <form action="/transmit" class="form transmit-form hidden">
+            <h1 class="form__title">Hello, Jedi <span class="jedi-name"></span></h1>
+            <input type="text" name="message" class="form__input" spellcheck="false" autofocus>
             <button class="button">Transmit</button>
         </form>
 
         <footer>
-            <button class="subscribe button button--mini" data-action="subscribe">Subscribe</button>
+            <button class="button button--mini subscribe-button" data-action="subscribe">Subscribe</button>
             <a href="/transmissions" class="button button--mini">View Transmissions</a>
         </footer>
 

@@ -15,7 +15,7 @@ var starwarspwa = (function(_) {
 
     var jediForm = _.$('.jedi-form');
     var transmitForm = _.$('.transmit-form');
-    var subscribeButton = _.$('.subscribe');
+    var subscribeButton = _.$('.subscribe-button');
 
     var name = localStorage.getItem('name');
     var subscriptionId = null;
