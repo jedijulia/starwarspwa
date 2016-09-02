@@ -64,7 +64,15 @@ def notify_everyone(sender, message):
     notification = {
         'title': sender + '...',
         'body': message,
-        'icon': '/static/starwarspwa/images/avatars/' + avatar_filename}
+        'icon': '/static/starwarspwa/images/avatars/' + avatar_filename,
+        'actions': [
+            {
+                'action': 'echo',
+                'title': 'Echo Transmission',
+                'icon': '/static/starwarspwa/images/jedi-icon.png'
+            },
+        ],
+    }
 
     for subscription in Subscription.objects.all():
         if subscription.p256dh and subscription.auth:
@@ -78,7 +86,9 @@ def send_encrypted_notification(subscription, notification):
         'endpoint': subscription.endpoint,
         'keys': {
             'p256dh': subscription.p256dh,
-            'auth': subscription.auth}}
+            'auth': subscription.auth,
+        },
+    }
     payload = json.dumps(notification)
     WebPusher(subscription_info).send(payload, gcm_key=settings.GCM_API_KEY)
 
@@ -87,9 +97,11 @@ def send_unencrypted_notification(subscription, notification):
     subscription_id = subscription.endpoint[40:]
     headers = {
         'Authorization': 'key=' + settings.GCM_API_KEY,
-        'Content-Type': 'application/json'}
+        'Content-Type': 'application/json',
+    }
     payload = {
         'registration_ids': [subscription_id],
-        'notification': notification}
+        'notification': notification,
+    }
     requests.post('https://android.googleapis.com/gcm/send',
                   data=json.dumps(payload), headers=headers)
