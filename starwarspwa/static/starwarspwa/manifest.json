@@ -1,4 +1,15 @@
 {
-  "name": "Jedi Beacon Tranceiver",
-  "gcm_sender_id": "747154623169"
+  "name": "Jedi Beacon Transceiver",
+  "gcm_sender_id": "747154623169",
+  "short_name": "Transceiver",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "##fff",
+  "description": "The ultimate jedi messaging system.",
+  "icons": [{
+    "src": "",
+    "sizes": "48x48",
+    "type": "image/png"
+  }]
 }
