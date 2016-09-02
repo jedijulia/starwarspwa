@@ -111,14 +111,12 @@ if (supportsBackgroundSync()) {
             var transmission = { jedi: name, message: message };
             saveTransmissionToIndexedDB(transmission)
                 .then(registerForBackgroundSync)
-                .then(enableTransmissionForm)
-                .then(resetTransmissionForm)
                 .catch(function(error) {
-                    sendTransmissionToServer(transmission)
-                        .then(enableTransmissionForm)
-                        .then(resetTransmissionForm)
+                    return sendTransmissionToServer(transmission)
                         .catch(handleTransmissionFailure);
-                });
+                })
+                .then(enableTransmissionForm)
+                .then(resetTransmissionForm);
         }
     });
 }
