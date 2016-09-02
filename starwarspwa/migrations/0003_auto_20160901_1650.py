@@ -19,16 +19,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subscription',
             name='auth',
-            field=models.CharField(max_length=255, null=True),
+            field=models.CharField(max_length=255, blank=True, null=True),
         ),
         migrations.AddField(
             model_name='subscription',
             name='endpoint',
-            field=models.CharField(max_length=255, null=True),
+            field=models.CharField(max_length=255, blank=True, null=True),
         ),
         migrations.AddField(
             model_name='subscription',
             name='p256dh',
-            field=models.CharField(max_length=255, null=True),
+            field=models.CharField(max_length=255, blank=True, null=True),
         ),
     ]
