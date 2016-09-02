@@ -1,5 +1,5 @@
 import json
-import requests
+from pywebpush import WebPusher
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -19,32 +19,7 @@ class TransmitView(View):
         message = request.GET.get('message')
         Transmission.objects.create(jedi=jedi, message=message)
 
-        sender_id = request.GET.get('sender_id', None)
-        receiver_ids = []
-        for subscription in Subscription.objects.all().\
-                exclude(subscription_id=sender_id):
-            receiver_ids.append(subscription.subscription_id)
-
-        headers = {
-            'Authorization': 'key={}'.format(settings.GCM_API_KEY),
-            'Content-Type': 'application/json'}
-        payload = {
-            'registration_ids': receiver_ids,
-            'notification': {
-                'title': jedi,
-                'body': message,
-                'icon': '/static/starwarspwa/images/jedi-icon.png'
-            }
-        }
-
-        print '*** Sending request to GCM ***'
-        print headers
-        print payload
-
-        requests.post('https://android.googleapis.com/gcm/send',
-            data=json.dumps(payload), headers=headers)
-
-        print '**** Request sent to GCM *****'
+        notify_everyone(jedi, message)
 
         return JsonResponse({'success': True})
 
@@ -76,3 +51,25 @@ class SubscriptionView(View):
 
 class OfflineView(TemplateView):
     template_name = 'starwarspwa/offline.html'
+
+
+
+
+
+def notify_everyone(sender, message):
+    notification = {
+        'title': sender + '...',
+        'body': message,
+        'icon': '/static/starwarspwa/images/jedi-icon.png'}
+    notification = json.dumps(notification)
+
+    for subscription in Subscription.objects.all():
+        subscription_info = {
+            'endpoint': subscription.endpoint,
+            'keys': {
+                'p256dh': subscription.p256dh,
+                'auth': subscription.auth}}
+        headers = {'Content-Type': 'application/json'}
+
+        WebPusher(subscription_info).send(
+            notification, headers, gcm_key=settings.GCM_API_KEY)
