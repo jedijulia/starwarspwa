@@ -7,7 +7,8 @@ var urlsToCache = [
     '/static/starwarspwa/javascripts/jquery.js',
     '/static/starwarspwa/javascripts/sw-register.js',
     '/static/starwarspwa/fonts/quicksand/regular.woff2',
-    '/static/starwarspwa/fonts/quicksand/bold.woff2'
+    '/static/starwarspwa/fonts/quicksand/bold.woff2',
+    '/static/starwarspwa/images/wifi-offline.png'
 ];
 
 
@@ -17,7 +18,7 @@ self.addEventListener('install', function(e) {
             return cache.addAll(urlsToCache);
         }).then(function() {
             console.info('Caching for "' + cacheName + '" completed."');
-            self.skipWaiting();
+            return self.skipWaiting();
         }).catch(function(error) {
             console.error('Failed to cache resources.', error);
         })
@@ -28,11 +29,14 @@ self.addEventListener('install', function(e) {
 self.addEventListener('activate', function(e) {
     e.waitUntil(
         caches.keys().then(function(cacheKeys) {
-            return Promise.all(cacheKeys.filter(function(cacheKey) {
+            var cachesToDelete = cacheKeys.filter(function(cacheKey) {
                 return cacheKey !== cacheName;
-            }).map(function(cacheKey) {
+            });
+            return Promise.all(cachesToDelete.map(function(cacheKey) {
                 return caches.delete(cacheKey);
             }));
+        }).then(function() {
+            return self.clients.claim();
         })
     );
 });
