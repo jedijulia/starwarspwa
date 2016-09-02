@@ -67,9 +67,9 @@ def notify_everyone(sender, message):
         'icon': '/static/starwarspwa/images/avatars/' + avatar_filename,
         'actions': [
             {
-                'action': 'echo',
-                'title': 'Echo Transmission',
-                'icon': '/static/starwarspwa/images/jedi-icon.png'
+                'action': 'reply',
+                'title': 'Reply',
+                'icon': '/static/starwarspwa/images/reply.png'
             },
         ],
     }
