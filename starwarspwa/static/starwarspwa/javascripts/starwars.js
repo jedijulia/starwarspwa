@@ -230,8 +230,8 @@ function saveTransmissionToIndexedDB(transmission) {
 
         return new Promise(function(resolve, reject) {
             var operation = objectStore.add(transmission);
-            operation.success = resolve;
-            operation.error = reject;
+            operation.onsuccess = resolve;
+            operation.onerror = reject;
         });
     });
 }
