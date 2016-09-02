@@ -37,21 +37,18 @@ self.addEventListener('activate', function(e) {
     );
 });
 
-//
-//
-// self.addEventListener('activate', function(e) {
-//     e.waitUntil(
-//         caches.keys().then(function(cacheNames) {
-//             return Promise.all(cacheNames.map(function(cacheName) {
-//                 if (cacheName !== CACHE_NAME) {
-//                     console.info('Deleting old cache:', cacheName);
-//                     return caches.delete(cacheName);
-//                 }
-//             }));
-//         })
-//     );
-// });
-//
+
+self.addEventListener('fetch', function(e) {
+    e.respondWith(
+        caches.match(e.request).then(function(response) {
+            if (response) {
+                return response;
+            }
+            return fetch(e.request);
+        })
+    );
+});
+
 //
 // self.addEventListener('fetch', function(e) {
 //     if (/\/transmissions\/$/.test(e.request.url)) {
