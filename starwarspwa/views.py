@@ -1,4 +1,6 @@
 import json
+import random
+
 import requests
 from pywebpush import WebPusher
 
@@ -58,10 +60,11 @@ class OfflineView(TemplateView):
 
 
 def notify_everyone(sender, message):
+    avatar_filename = '{0}.jpg'.format(random.randrange(1, 10))
     notification = {
         'title': sender + '...',
         'body': message,
-        'icon': '/static/starwarspwa/images/jedi-icon.png'}
+        'icon': '/static/starwarspwa/images/avatars/' + avatar_filename}
 
     for subscription in Subscription.objects.all():
         if subscription.p256dh and subscription.auth:
