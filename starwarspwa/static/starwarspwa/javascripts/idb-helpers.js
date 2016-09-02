@@ -75,7 +75,7 @@ function getAllTransmissionsFromIndexedDB() {
 
 function deleteAllTransmissionsFromIndexedDB() {
     return getIndexedDatabase().then(function(db) {
-        var objectStore = db.transaction('transmissions')
+        var objectStore = db.transaction('transmissions', 'readwrite')
             .objectStore('transmissions');
 
         return new Promise(function(resolve, reject) {
