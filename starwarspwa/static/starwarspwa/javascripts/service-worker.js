@@ -61,16 +61,20 @@ self.addEventListener('fetch', function(e) {
     }
 });
 
-//
-// self.addEventListener('push', function(e) {
-//     e.waitUntil(
-//         self.registration.showNotification('Jedi Transceiver', {
-//             body: 'New transmission received',
-//             icon: '/static/starwarspwa/images/jedi-icon.png'
-//         })
-//     );
-// });
-//
+
+self.addEventListener('push', function(e) {
+    if (e.data === null) {
+        var notification = {
+            title: 'Transmission Received',
+            body: 'Tap/click to view all transmissions',
+            icon: '/static/starwarspwa/images/jedi-icon.png'
+        };
+    } else {
+        var notification = e.data.json();
+    }
+    e.waitUntil(self.registration.showNotification(notification.title, notification));
+});
+
 //
 // self.addEventListener('notificationclick', function(e) {
 //     e.notification.close();
