@@ -80,6 +80,7 @@ self.addEventListener('push', function(e) {
     } else {
         var notification = e.data.json();
     }
+    notification.tag = 'transmission';
     e.waitUntil(self.registration.showNotification(notification.title, notification));
 });
 
