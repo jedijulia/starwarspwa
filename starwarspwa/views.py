@@ -1,4 +1,5 @@
 import json
+import requests
 from pywebpush import WebPusher
 
 from django.conf import settings
@@ -61,14 +62,31 @@ def notify_everyone(sender, message):
         'title': sender + '...',
         'body': message,
         'icon': '/static/starwarspwa/images/jedi-icon.png'}
-    notification = json.dumps(notification)
 
     for subscription in Subscription.objects.all():
-        subscription_info = {
-            'endpoint': subscription.endpoint,
-            'keys': {
-                'p256dh': subscription.p256dh,
-                'auth': subscription.auth}}
+        if subscription.p256dh and subscription.auth:
+            send_encrypted_notification(subscription, notification)
+        else:
+            send_unencrypted_notification(subscription, notification)
 
-        WebPusher(subscription_info).send(
-            notification, gcm_key=settings.GCM_API_KEY)
+
+def send_encrypted_notification(subscription, notification):
+    subscription_info = {
+        'endpoint': subscription.endpoint,
+        'keys': {
+            'p256dh': subscription.p256dh,
+            'auth': subscription.auth}}
+    payload = json.dumps(notification)
+    WebPusher(subscription_info).send(payload, gcm_key=settings.GCM_API_KEY)
+
+
+def send_unencrypted_notification(subscription, notification):
+    subscription_id = subscription.endpoint[40:]
+    headers = {
+        'Authorization': 'key=' + settings.GCM_API_KEY,
+        'Content-Type': 'application/json'}
+    payload = {
+        'registration_ids': [subscription_id],
+        'notification': notification}
+    requests.post('https://android.googleapis.com/gcm/send',
+                  data=json.dumps(payload), headers=headers)
