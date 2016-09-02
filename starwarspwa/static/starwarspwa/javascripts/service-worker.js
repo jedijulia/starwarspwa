@@ -1,4 +1,4 @@
-var cacheName = 'cache-one';
+var cacheName = 'cache-two';
 var urlsToCache = [
     '/',
     '/offline/',
