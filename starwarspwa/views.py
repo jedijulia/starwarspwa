@@ -69,7 +69,6 @@ def notify_everyone(sender, message):
             'keys': {
                 'p256dh': subscription.p256dh,
                 'auth': subscription.auth}}
-        headers = {'Content-Type': 'application/json'}
 
         WebPusher(subscription_info).send(
-            notification, headers, gcm_key=settings.GCM_API_KEY)
+            notification, gcm_key=settings.GCM_API_KEY)
