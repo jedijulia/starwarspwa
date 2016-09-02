@@ -5,6 +5,7 @@ var urlsToCache = [
     '/static/starwarspwa/stylesheets/starwars.css',
     '/static/starwarspwa/javascripts/starwars.js',
     '/static/starwarspwa/javascripts/jquery.js',
+    '/static/starwarspwa/javascripts/idb-helpers.js',
     '/static/starwarspwa/javascripts/sw-register.js',
     '/static/starwarspwa/fonts/quicksand/regular.woff2',
     '/static/starwarspwa/fonts/quicksand/bold.woff2',
