@@ -75,8 +75,25 @@ self.addEventListener('push', function(e) {
     e.waitUntil(self.registration.showNotification(notification.title, notification));
 });
 
-//
-// self.addEventListener('notificationclick', function(e) {
-//     e.notification.close();
-//     e.waitUntil(self.clients.openWindow('/transmissions/'));
-// });
+
+self.addEventListener('notificationclick', function(e) {
+    e.notification.close();
+    if (e.action === 'echo') {
+        var jedi = e.notification.title;
+        var message = e.notification.body;
+        var url = '/transmit?jedi=' + jedi + '&message=' + message;
+        e.waitUntil(fetch(url));
+    } else {
+        e.waitUntil(self.clients.matchAll({
+            includeUncontrolled: true,
+            type: 'window'
+        }).then(function(clientWindows) {
+            if (clientWindows.length > 0) {
+                clientWindows[0].navigate('/transmissions/');
+                clientWindows[0].focus();
+            } else {
+                self.clients.openWindow('/transmissions/');
+            }
+        }));
+    }
+});
