@@ -81,6 +81,8 @@ function sendTransmissionToServer(transmission) {
 
 
 function handleTransmissionFailure(error) {
+    enableTransmissionForm();
+    $('.transmit-form input').focus();
     console.error('Transmission Failed.');
 }
 
