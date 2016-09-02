@@ -43,40 +43,24 @@ self.addEventListener('activate', function(e) {
 
 
 self.addEventListener('fetch', function(e) {
-    e.respondWith(
-        caches.match(e.request).then(function(response) {
-            if (response) {
-                return response;
-            }
-            return fetch(e.request);
-        })
-    );
+    if (e.request.url.includes('/transmissions/')) {
+        e.respondWith(
+            fetch(e.request).catch(function() {
+                return caches.match('/offline/');
+            })
+        );
+    } else {
+        e.respondWith(
+            caches.match(e.request).then(function(response) {
+                if (response) {
+                    return response;
+                }
+                return fetch(e.request);
+            })
+        );
+    }
 });
 
-//
-// self.addEventListener('fetch', function(e) {
-//     if (/\/transmissions\/$/.test(e.request.url)) {
-//         e.respondWith(
-//             fetch(e.request).catch(function(error) {
-//                 return caches.open(CACHE_NAME).then(function(cache) {
-//                     return cache.match('/offline/');
-//                 });
-//             })
-//         );
-//     } else {
-//         e.respondWith(
-//             caches.open(CACHE_NAME).then(function(cache) {
-//                 return cache.match(e.request).then(function(response) {
-//                     if (response) {
-//                         return response;
-//                     }
-//                     return fetch(e.request);
-//                 })
-//             })
-//         );
-//     }
-// });
-//
 //
 // self.addEventListener('push', function(e) {
 //     e.waitUntil(
