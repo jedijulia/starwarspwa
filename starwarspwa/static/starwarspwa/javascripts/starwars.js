@@ -176,7 +176,7 @@ function updateSubscriptionInServerStorage(action, subscription) {
         $.ajax({
             url: '/subscription/' + action,
             type: 'GET',
-            data: JSON.parse(JSON.stringify(subscription)),
+            data: subscription.toJSON(),
             success: resolve,
             error: reject
         });
