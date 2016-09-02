@@ -131,13 +131,13 @@ if ('serviceWorker' in navigator) {
 
 
 function changeSubscribeToUnsubscribe() {
-    $('.subscription-button').text('Unsubscribe');
+    $('.subscription-button').text('Unsubscribe From Push Notifications');
     $('.subscription-button').data('action', 'unsubscribe');
 }
 
 
 function changeUnsubscribeToSubscribe() {
-    $('.subscription-button').text('Subscribe');
+    $('.subscription-button').text('Subscribe To Push Notifications');
     $('.subscription-button').data('action', 'subscribe');
 }
 
