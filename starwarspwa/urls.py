@@ -33,6 +33,4 @@ urlpatterns = [
 
     url(r'^service-worker.js$', serve,
         kwargs={'path': 'starwarspwa/javascripts/service-worker.js'}),
-    url(r'^manifest.json$', serve,
-        kwargs={'path': 'starwarspwa/manifest.json'}),
 ]
