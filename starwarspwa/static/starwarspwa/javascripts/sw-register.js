@@ -79,3 +79,61 @@ function unsubscribeFromPushNotifications(subscription) {
         console.error('Failed to unsubscribe from push notifications.', error);
     });
 }
+
+
+
+
+
+/**
+ *  Handle message transmissions through background sync.
+ *
+ *  If the browser supports background sync, we disable the current
+ *  transmission form behavior (send transmission to server through AJAX),
+ *  modify it to save the message to IndexedDB, and then register for a
+ *  background sync.
+ *
+ *  If background sync is not supported or when registering for background sync
+ *  fails, fallback to the AJAX way of sending the transmission to the server.
+ **/
+
+if (supportsBackgroundSync()) {
+    $('.transmit-form').off();
+
+    $('.transmit-form').on('submit', function(e) {
+        e.preventDefault();
+
+        var name = localStorage.getItem('name');
+        var message = $('.transmit-form input').val().trim();
+
+        if (name.length > 0 && message.length > 0) {
+            disableTransmissionForm();
+
+            var transmission = { jedi: name, message: message };
+            saveTransmissionToIndexedDB(transmission)
+                .then(registerForBackgroundSync)
+                .then(enableTransmissionForm)
+                .then(resetTransmissionForm)
+                .catch(function(error) {
+                    sendTransmissionToServer(transmission)
+                        .then(enableTransmissionForm)
+                        .then(resetTransmissionForm)
+                        .catch(handleTransmissionFailure);
+                });
+        }
+    });
+}
+
+
+function registerForBackgroundSync() {
+    return navigator.serviceWorker.getRegistration().then(function(registration) {
+        if (registration !== undefined) {
+            return registration.sync.register('transmit-message');
+        }
+        throw new Error('No service worker registered yet.');
+    });
+}
+
+
+function supportsBackgroundSync() {
+    return ('serviceWorker' in navigator) && ('SyncManager' in window);
+}
