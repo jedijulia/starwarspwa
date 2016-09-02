@@ -108,14 +108,18 @@ function resetTransmissionForm() {
 /**
  *  Update subscribe button state.
  *
- *  Check push notification subscription status. If user is not yet subscribed
- *  to push notifications, we don't do anything with the subscribe button.
+ *  First, check if the browser supports push notifications. If not, hide the
+ *  subscribe button.
+ *
+ *  If push notifications are supported, check push notification subscription
+ *  status. If user is not yet subscribed to push notifications, we don't do
+ *  anything with the subscribe button.
  *
  *  If the user is already subscribed to push notifications, we change the
  *  subscribe button to an unsubscribe button.
  **/
 
-if ('serviceWorker' in navigator) {
+if (supportsPushNotifications()) {
     navigator.serviceWorker.getRegistration().then(function(registration) {
         if (registration !== undefined) {
             registration.pushManager.getSubscription().then(function(subscription) {
@@ -127,6 +131,14 @@ if ('serviceWorker' in navigator) {
     }).catch(function(error) {
         console.error('Failed to get service worker registration.', error);
     });
+} else {
+    hideSubscriptionButton();
+}
+
+
+function supportsPushNotifications() {
+    return ('serviceWorker' in navigator) && ('Notification' in window)
+        && ('PushManager' in window) && Notification.permission !== 'denied';
 }
 
 
@@ -139,6 +151,11 @@ function changeSubscribeToUnsubscribe() {
 function changeUnsubscribeToSubscribe() {
     $('.subscription-button').text('Subscribe To Push Notifications');
     $('.subscription-button').data('action', 'subscribe');
+}
+
+
+function hideSubscriptionButton() {
+    $('.subscription-button').addClass('hidden');
 }
 
 
