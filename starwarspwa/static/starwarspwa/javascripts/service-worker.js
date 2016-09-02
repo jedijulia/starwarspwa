@@ -37,6 +37,8 @@ self.addEventListener('activate', function(e) {
             }));
         }).then(function() {
             return self.clients.claim();
+        }).catch(function(error) {
+            console.error('Failed to delete old caches.', error);
         })
     );
 });
@@ -56,6 +58,8 @@ self.addEventListener('fetch', function(e) {
                     return response;
                 }
                 return fetch(e.request);
+            }).catch(function(error) {
+                console.error('Error when trying to match request in cache.', error);
             })
         );
     }
@@ -94,5 +98,7 @@ self.addEventListener('notificationclick', function(e) {
         } else {
             self.clients.openWindow(redirectUrl);
         }
+    }).catch(function(error) {
+        console.error('Failed to get client windows.', error);
     }));
 });
