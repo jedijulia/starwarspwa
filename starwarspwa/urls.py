@@ -30,7 +30,4 @@ urlpatterns = [
     url(r'^subscription/(?P<action>\w+)/$', views.SubscriptionView.as_view(),
         name='subscription-page'),
     url(r'^offline/$', views.OfflineView.as_view(), name='offline-page'),
-
-    url(r'^service-worker.js$', serve,
-        kwargs={'path': 'starwarspwa/javascripts/service-worker.js'}),
 ]
