@@ -1,6 +1,3 @@
-self.importScripts('/static/starwarspwa/javascripts/idb-helpers.js');
-
-
 var cacheName = 'cache-one';
 var urlsToCache = [
     '/',
@@ -64,64 +61,6 @@ self.addEventListener('fetch', function(e) {
                 return fetch(e.request);
             }).catch(function(error) {
                 console.error('Error when trying to match request in cache.', error);
-            })
-        );
-    }
-});
-
-
-self.addEventListener('push', function(e) {
-    if (e.data === null) {
-        var notification = {
-            title: 'Transmission Received',
-            body: 'Tap/click to view all transmissions',
-            icon: '/static/starwarspwa/images/jedi-icon.png'
-        };
-    } else {
-        var notification = e.data.json();
-    }
-    notification.tag = 'transmission';
-    e.waitUntil(self.registration.showNotification(notification.title, notification));
-});
-
-
-self.addEventListener('notificationclick', function(e) {
-    e.notification.close();
-    if (e.action === 'reply') {
-        var redirectUrl = '/';
-    } else {
-        var redirectUrl = '/transmissions/';
-    }
-
-    e.waitUntil(self.clients.matchAll({
-        includeUncontrolled: true,
-        type: 'window'
-    }).then(function(clientWindows) {
-        if (clientWindows.length > 0) {
-            clientWindows[0].navigate(redirectUrl);
-            clientWindows[0].focus();
-        } else {
-            self.clients.openWindow(redirectUrl);
-        }
-    }).catch(function(error) {
-        console.error('Failed to get client windows.', error);
-    }));
-});
-
-
-self.addEventListener('sync', function(e) {
-    if (e.tag === 'transmit-message') {
-        e.waitUntil(
-            getAllTransmissionsFromIndexedDB().then(function(transmissions) {
-                return Promise.all(transmissions.map(function(transmission) {
-                    var url = '/transmit?jedi=' + transmission.jedi
-                        + '&message=' + transmission.message;
-                    return fetch(url);
-                }));
-            }).then(function() {
-                deleteAllTransmissionsFromIndexedDB();
-            }).catch(function(error) {
-                console.error('Error while background-syncing transmissions.', error);
             })
         );
     }
