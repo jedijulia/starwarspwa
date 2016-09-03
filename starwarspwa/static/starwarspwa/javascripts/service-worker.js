@@ -1,6 +1,3 @@
-self.importScripts('/static/starwarspwa/javascripts/idb-helpers.js');
-
-
 var cacheName = 'cache-one';
 var urlsToCache = [
     '/',
@@ -106,23 +103,4 @@ self.addEventListener('notificationclick', function(e) {
     }).catch(function(error) {
         console.error('Failed to get client windows.', error);
     }));
-});
-
-
-self.addEventListener('sync', function(e) {
-    if (e.tag === 'transmit-message') {
-        e.waitUntil(
-            getAllTransmissionsFromIndexedDB().then(function(transmissions) {
-                return Promise.all(transmissions.map(function(transmission) {
-                    var url = '/transmit?jedi=' + transmission.jedi
-                        + '&message=' + transmission.message;
-                    return fetch(url);
-                }));
-            }).then(function() {
-                deleteAllTransmissionsFromIndexedDB();
-            }).catch(function(error) {
-                console.error('Error while background-syncing transmissions.', error);
-            })
-        );
-    }
 });
